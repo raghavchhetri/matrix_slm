@@ -1,8 +1,9 @@
 import numpy as np
+from matrixpack.constants import dx, dz, MagAM, fSLM, SLMpixel, SLMheight, SLMwidth, beamD
 from LightPipes import um, nm, Begin, GaussBeam, RectAperture
 
-def target_pattern(wavelength,beamD,fSLM,SLMpixel,SLMwidth,SLMheight,dx,dz,MagAM,tag='MATRIX',movebeams_um=[0,0,0,0,0,0,0,0,0]):
-#(+ve values for `movebeams_um` moves the beam UP in sample space i.e., along +Z in the microscope)
+def target_pattern(wavelength, tag, movebeams_um=[0,0,0,0,0,0,0,0,0]):
+    #(+ve values for `movebeams_um` moves the beam UP in sample space i.e., along +Z in the microscope)
 
 # X-separation in space space between beams on the same focal plane 
     sepx  = 4*dz 
@@ -31,9 +32,9 @@ def target_pattern(wavelength,beamD,fSLM,SLMpixel,SLMwidth,SLMheight,dx,dz,MagAM
     if movebeams_um==[0,0,0,0,0,0,0,0,0]:
         movetag = '.bmp'
     else:       
-        movetag = '-[f147-'+str(movebeams_um[0])+'.'+str(movebeams_um[3])+'.'+str(movebeams_um[6])+ \
-        ']-[m258-'+str(movebeams_um[1])+'.'+str(movebeams_um[4])+'.'+str(movebeams_um[7])+ \
-        ']-[n369_'+str(movebeams_um[2])+'.'+str(movebeams_um[5])+'.'+str(movebeams_um[8])+'].bmp'
+        movetag = '_far'+str(movebeams_um[0])+'.'+str(movebeams_um[3])+'.'+str(movebeams_um[6])+ \
+        '_mid'+str(movebeams_um[1])+'.'+str(movebeams_um[4])+'.'+str(movebeams_um[7])+ \
+        '_near'+str(movebeams_um[2])+'.'+str(movebeams_um[5])+'.'+str(movebeams_um[8])+'.bmp'
             
 # Grid for the computation of the optical fields
     gridsize = np.ceil((fSLM*wavelength/SLMpixel)/dZ)*dZ
@@ -52,7 +53,7 @@ def target_pattern(wavelength,beamD,fSLM,SLMpixel,SLMwidth,SLMheight,dx,dz,MagAM
     gridpixels = int(gridsize/unit)
     print('Pixels in the grid:', gridpixels)
     print('Pixels along SLM height:',SLMheight)
-    print('SLM sufficiently sampled: PROCEED.') if gridpixels > SLMheight else print('WARNING: SLM undersampled. Check "Nunits" in `target_pattern`')
+    print('SLM sufficiently sampled: PROCEED. \n') if gridpixels > SLMheight else print('WARNING: SLM undersampled. Check "Nunits" in `target_pattern` \n')
 
 # Define beam-spot positions at the Apodizing Mask
     if tag == 'MATRIX': # 3 x 3 Beams
@@ -123,7 +124,7 @@ def target_pattern(wavelength,beamD,fSLM,SLMpixel,SLMwidth,SLMheight,dx,dz,MagAM
     Field= GaussBeam(Field, beamD/2)
     SLMfield = RectAperture(Field, sx=SLMheight*SLMpixel, sy=SLMwidth*SLMpixel, x_shift=0.0, y_shift=0.0, angle=0.0)
     print('Input Field on the SLM:')
-    print(type(SLMfield.field), SLMfield.field.dtype, SLMfield.field.shape) 
+    print(type(SLMfield.field), SLMfield.field.dtype, SLMfield.field.shape, '\n')
     
 # Target pattern
     target = np.zeros((gridpixels, gridpixels)) #Note: LightPipes command 'SubIntensity' needs floats

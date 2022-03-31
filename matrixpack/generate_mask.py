@@ -3,9 +3,10 @@ import numpy as np
 import pylab as plt
 from skimage import io
 from os.path import join
+from matrixpack.constants import dx, dz, MagAM, fSLM, SLMpixel, SLMheight, SLMwidth, beamD
 from LightPipes import PipFFT, SubIntensity, Phase, nm
 
-def generate_mask(wavelength, SLMfield, target, SLMwidth, SLMheight, outPath, footer, Niter = 12, tag = 'MATRIX'):
+def generate_mask(wavelength, Niter, SLMfield, target, footer, tag, outPath):
 #Iteration loop to get phase distribution
     Field = SLMfield
     gridpixels = len(target) #same size as the Target
