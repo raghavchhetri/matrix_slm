@@ -46,4 +46,4 @@ Using "LightPipes for Python"
        - Each beam has two choices: 0 or +step, then 2^9 = 512 combinations
        - Each beam has two choices: 0 or -step (512-1 combinations: all zeros is already counted)
        - Each beam has two choices: +step or -step (512-2 combinations: all +step already counted, all -step already counted)
-       So, only considering 1533 combinations out of possible 2^9 combinations
+       So, only considering 1533 combinations out of possible 3^9 combinations
