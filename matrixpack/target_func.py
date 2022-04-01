@@ -136,3 +136,6 @@ def tar(movebeams_um=[0,0,0,0,0,0,0,0,0], tag='MATRIX'):
     print(type(target), target.shape, np.min(target), np.max(target), target.dtype)    
 
     return SLMfield, target, movetag
+
+if __name__ == '__main__':
+    tar()

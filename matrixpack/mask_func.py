@@ -4,13 +4,13 @@ import numpy as np
 import pylab as plt
 from skimage import io
 from os.path import join
-import targetfun
+from matrixpack import target_func
 from matrixpack.constants import dx, dz, MagAM, fSLM, SLMpixel, SLMheight, SLMwidth, beamD
 from LightPipes import PipFFT, SubIntensity, Phase, nm
 
-def mask(movebeams_um=[0,0,0,0,0,0,0,0,0], wavelength=488*nm, Niter=21, tag='MATRIX'):
-    [Field, target, footer] = targetfun.tar(movebeams_um, tag) 
-    outPath = os.getcwd()+'\masks'
+def mask(movebeams_um=[0,0,0,0,0,0,0,0,0], wavelength=488*nm, Niter=21, tag='MATRIX', outPath = os.getcwd()+'\masks'):
+    [Field, target, footer] = target_func.tar(movebeams_um, tag) 
+
 #Iteration loop to get phase distribution
     #Field = SLMfield
     gridpixels = len(target) #same size as the Target
@@ -44,3 +44,6 @@ def mask(movebeams_um=[0,0,0,0,0,0,0,0,0], wavelength=488*nm, Niter=21, tag='MAT
 #Save mask to be applied to SLM
     outfilename= str(int(wavelength/nm))+'nm_Niter'+str(Niter)+'_' +tag +footer
     io.imsave(join(outPath, outfilename), phaseMask8)
+    
+if __name__ == '__main__':
+    mask()
