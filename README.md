@@ -1,7 +1,7 @@
 ## matrix_slm
 Raghav K. Chhetri
 
-Phase Retrievel via Gerchberg-Saxton algorithm to generate phase masks for use with Meadowlarks SLM HSP1920 in the Matrix microscope 
+Phase Retrievel via Gerchberg-Saxton algorithm to generate phase masks for Meadowlarks HSP1920 SLM in the Matrix microscope 
 
 Using "LightPipes for Python"
     
@@ -18,7 +18,7 @@ Using "LightPipes for Python"
     
     `NEAR`, `NEAR_beam3`, `NEAR_beam6`, `NEAR_beam9`
     
-    `DIAGONAL` i.e., beams 1-5-8
+    `DIAGONAL` i.e., beams 1-5-9
 
     It also allows the position of each beam to be manually defined via the `movebeams_um` parameter, which follows this convention-
 
@@ -40,10 +40,12 @@ Using "LightPipes for Python"
 
     a. `move_func()` to auto-generate a list of beam positions to run multiprocessing on
     
-    b. `mask_func()` to compute phase mask for each beam position. It calls the `target_func()` module to define target pattern for each beam position. All above target pattern selections are available
+    b. `mask_func()` to compute phase mask for each beam position. 
+    
+    c. `target_func()` to define target pattern for each beam position. All above target pattern selections are available
     
        Rules for beam positions on a 3x3 grid:
        - Each beam has two choices: 0 or +step, then 2^9 = 512 combinations
-       - Each beam has two choices: 0 or -step (512-1 combinations: all zeros is already counted)
-       - Each beam has two choices: +step or -step (512-2 combinations: all +step already counted, all -step already counted)
+       - Each beam has two choices: 0 or -step (511 combinations: all zeros is already counted)
+       - Each beam has two choices: +step or -step (510 combinations: all +step and all -step already counted)
        So, only considering 1533 combinations out of possible 3^9 combinations
