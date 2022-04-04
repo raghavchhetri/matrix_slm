@@ -33,7 +33,7 @@ Using "LightPipes for Python"
         Note: +ve values for `movebeams_um` moves the beam UP in sample space 
         i.e., along +Z in the Matrix microscope       
     
-    b. `generate_mask()`to compute phase mask to generate selected target pattern and save as .bmp to load onto the SLM
+    b. `generate_mask()`to compute phase mask as .bmp, which when applied to the SLM generates its corresponding target pattern
     
     -----
 2. To generate a large batch of patterns for a grid of beam positions (see rules below), use `GerchbergSaxton_Matrix_MultiProcess.ipynb`. It calls the following modules:
